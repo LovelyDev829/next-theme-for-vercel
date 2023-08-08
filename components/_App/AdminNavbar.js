@@ -40,7 +40,8 @@ const AdminNavbar = ({ user }) => {
             <div className="navbar navbar-expand-lg navbar-light">
               <Link href="/">
                 <a onClick={toggleNavbar} className="navbar-brand">
-                  <img src="/images/logo.png" alt="logo" />
+                  {/* <img src="/images/logo.png" alt="logo" /> */}
+									<span style={{fontWeight: 800, fontSize: "30px"}}>Cordova</span>
                 </a>
               </Link>
 
