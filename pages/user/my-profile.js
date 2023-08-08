@@ -1,16 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PageBanner from '@/components/Common/PageBanner';
 import Link from 'next/link';
+import { parseCookies } from 'nookies'
+import axios from 'axios'
 
 const MyProfile = () => {
+    const { token } = parseCookies()
+    const [data, setData] = useState({})
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        async function start(){
+            try {
+                setLoading(true)
+                const url = `/api/v1/user/get-profile`
+                const response = await axios.get(url, {
+                    headers: {Authorization: token}
+                })
+                console.log(response.data)
+                setData(response.data)
+                setLoading(false)
+    
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setLoading(false);
+            }
+        }
+        start()
+    }, [])
+
     return (
         <>
-            <PageBanner 
-                pageTitle="My Profile" 
-                homePageUrl="/" 
-                homePageText="Home" 
-                activePageText="My Profile" 
-            />  
+            <PageBanner
+                pageTitle="My Profile"
+                homePageUrl="/"
+                homePageText="Home"
+                activePageText="My Profile"
+            />
 
             <div className="ptb-100">
                 <div className="container">
@@ -18,8 +44,8 @@ const MyProfile = () => {
                         <div className="col-lg-4">
                             <div className="user-profile">
                                 <img src="/images/success-people/success-people3.jpg" />
-                                <h3>Jones Taylor</h3>
-                                <p>jonestaylor@gmail.com</p>
+                                {/* <h3>{data?.name}</h3> */}
+                                {/* <p>{data?.email}</p> */}
                             </div>
                         </div>
 
@@ -29,43 +55,39 @@ const MyProfile = () => {
                                     <table className="table table-bordered vertical-align-top">
                                         <tbody>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Name</td>
+                                                <td>{data?.name}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>About</td>
+                                                <td>{data?.about}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Role</td>
+                                                <td>{data?.role}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Email</td>
+                                                <td>{data?.email}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Phone Number</td>
+                                                <td>{data?.phone}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Status</td>
+                                                <td>{data?.active? 'Active' : 'Disabled'}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Created Time</td>
+                                                <td>{data?.createdAt}</td>
                                             </tr>
                                             <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jones Taylor</td>
-                                                <td>jonestaylor@gmail.com</td>
+                                                <td>Last Updated Time</td>
+                                                <td>{data?.updatedAt}</td>
                                             </tr>
                                         </tbody>
-                                    </table> 
+                                    </table>
                                 </div>
                             </div>
                         </div>

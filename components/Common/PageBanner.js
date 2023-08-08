@@ -19,9 +19,9 @@ const PageBanner = ({pageTitle, homePageUrl, homePageText, activePageText}) => {
                 </div>
             </div>
 
-            <div className="shape9">
+            {/* <div className="shape9">
                 <img src="/images/shape8.svg" alt="image" />
-            </div>
+            </div> */}
         </div>
     );
 }
